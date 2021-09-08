@@ -40,7 +40,6 @@ void reader(char *pathString) {
     char **history;
     history = (char **) malloc(700);
 
-//     system("clear");
     printf("\n ** Welcome to Group 13s Simple Shell. To close this, type 'exit' or press CTRL D. **\n");
     printf("**************************************************************************************\n");
     printf("%s>", getenv("HOME"));
@@ -67,9 +66,8 @@ void reader(char *pathString) {
             }
             tokens[i] = NULL;
 
-            /*alias stuff*/
+            /*alias*/
             if (getAliasPosition(tokens[0]) >= 0) {
-                //you will want to eventually check for all commands. e.g setpath, cd, history so on
                 char *newInput = findAlias(getAliasPosition(tokens[0]));
                 String newTokens[50];
 
@@ -82,7 +80,6 @@ void reader(char *pathString) {
                 }
                 newTokens[i] = NULL;
                 executeCommand(newTokens);
-//                printf(">");
                 printf("%s>", getenv("HOME"));
                 fgets(input, 512, stdin);
                 continue;
@@ -126,10 +123,6 @@ void executeCommand(char *tokens[]) {
     printf("Tokens 0 is: %s\n", tokens[0]);
     printf("Tokens 1 is %s\n", tokens[1]);
     printf("Alias position: %d\n", getAliasPosition(tokens[0]));
-//    if(getAliasPosition(tokens[0]) != -1){
-//        tokens[0] = getCommand(tokens[0]);
-//        printf("%s\n", tokens[1]);
-//    }
     pid_t c_pid, pid;
     int status;
     c_pid = fork();
@@ -139,7 +132,6 @@ void executeCommand(char *tokens[]) {
     }
     if (c_pid == 0) {
         execvp(tokens[0], tokens);
-//        execvp("/ls", );
         perror(tokens[0]);
         _exit(1);
     } else if (c_pid > 0) {
